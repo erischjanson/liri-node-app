@@ -56,10 +56,16 @@ function spotifyMe(){
 	});
 
 	//console.log(spotify);
-	spotify.search({type: "track", query: "All the Small Things", limit: 1}).then(function(response){
-		console.log(JSON.stringify(response.tracks.items[0].artists[0], null, " "));		
-	}).catch(function(err){
-		console.log(err);
+	spotify.search({type: "track", query: commandParameters}, function(err, data){
+		if(err){
+			console.log(err);
+			return;
+		}
+
+		console.log(JSON.stringify(data.tracks.items, null, " "));	
+		for (var i = 0; i < data.tracks.items.length; i++){
+			console.log(data.tracks.items[i].artists);
+		}	
 	});
 };
 
