@@ -7,6 +7,15 @@ var spotify = require("node-spotify-api");
 var keys = require("./keys.js");
 
 
+var command = process.argv[2];
+var commandParameters = "";
+for(var i = 3; i < process.argv.length; i++){
+	commandParameters += " " + process.argv[i];
+};
+
+
+
+
 
 //console.log(keys);
 // console.log(keys.twitter);
@@ -43,8 +52,10 @@ function spotifyMe(){
 
 function movie(){
 	console.log("movie");
-	request("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy", function(error,response,body){
+	//var title = process.argv
+	request("http://www.omdbapi.com/?t=" + commandParameters + "&y=&plot=short&apikey=trilogy", function(error,response,body){
 		if(!error && response.statusCode===200){
+			//console.log(JSON.parse(body));
 			console.log("Movie: " + JSON.parse(body).Title);
 			console.log("Release Year: " + JSON.parse(body).Year);
 			console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
@@ -62,7 +73,7 @@ function random(){
 	console.log("random");
 }
 
-var command = process.argv[2];
+
 
 if (command==="my-tweets"){
 	tweet();	
