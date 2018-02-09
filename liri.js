@@ -3,7 +3,7 @@ require("dotenv").config();
 var fs = require("fs");
 var request = require("request");
 var twitter = require("twitter");
-var spotify = require("node-spotify-api");
+var Spotify = require("node-spotify-api");
 var keys = require("./keys.js");
 
 //takes in user's command and parameters(e.g. movie title)
@@ -50,6 +50,17 @@ function tweet(){
 //spotify api call
 function spotifyMe(){
 	console.log("spotify");
+	var spotify = new Spotify({
+		  id: process.env.SPOTIFY_ID,
+	  	  secret: process.env.SPOTIFY_SECRET 
+	});
+
+	//console.log(spotify);
+	spotify.search({type: "track", query: "All the Small Things", limit: 1}).then(function(response){
+		console.log(JSON.stringify(response.tracks.items[0].artists[0], null, " "));		
+	}).catch(function(err){
+		console.log(err);
+	});
 };
 
 //omdb api call
