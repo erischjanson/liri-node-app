@@ -13,10 +13,6 @@ for(var i = 3; i < process.argv.length; i++){
 	commandParameters += " " + process.argv[i];
 };
 
-
-
-
-
 //console.log(keys);
 // console.log(keys.twitter);
 
@@ -94,29 +90,7 @@ function spotifyMe(){
   }).catch(function(err) {
     console.error('Error occurred: ' + err); 
   });
-		// spotify.search({type: "track", query: "0hrBpAOgrt8RXigk83LLNE", limit:20}, function(err, data){
-		// 	if(err){
-		// 		console.log(err);
-		// 		return;
-		// 	}
 
-		// 	for (var i = 0; i < data.tracks.items.length; i++){
-		// 	//var songName = data.tracks.items[i].name;
-		// 	//console.log(songName);
-		// 	console.log('SONG NAME', data.tracks.items[i].name);
-		// 	//var artistName = data.tracks.items[i].artists[0].name;
-		// 	//console.log(artistName);
-		// 	console.log('ARTIST NAME', data.tracks.items[i].artists[0].name);
-		// 	console.log('ITEMS', data.tracks.items[i]);
-		// 	//var albumName = data.tracks.items[i].album.name;
-		// 	//console.log(albumName);
-		// 	//console.log('ALBUM NAME', data.tracks.items[i].album.name);
-		// 	//var previewLink = data.tracks.items[i].preview_url;
-		// 	//console.log(previewLink);
-		// 	//console.log('PREVIEW LINK', data.tracks.items[i].preview_url);
-		// }	
-
-		// });
 	}
 };
 
@@ -155,6 +129,14 @@ function movie(){
 //file reading function
 function random(){
 	console.log("random");
+	fs.readFile("random.txt", "utf8", function(error, data){		
+		var newData = data.split(",");		
+		command=newData[0];
+		console.log(command);
+		commandParameters=newData[1];
+		console.log(commandParameters);
+		spotifyMe();
+	})
 }
 
 
