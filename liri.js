@@ -136,7 +136,7 @@ function movie(){
 			console.log("Plot: " + JSON.parse(body).Plot);
 			console.log("Actors: " + JSON.parse(body).Actors);
 		} else {
-			request("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy", function(error, response, body){
+			request("http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=trilogy", function(error, response, body){
 			console.log("Movie: " + JSON.parse(body).Title);
 			console.log("Release Year: " + JSON.parse(body).Year);
 			console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
