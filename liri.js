@@ -56,15 +56,27 @@ function spotifyMe(){
 	});
 
 	//console.log(spotify);
-	spotify.search({type: "track", query: commandParameters}, function(err, data){
+	spotify.search({type: "track", query: commandParameters, limit: 1}, function(err, data){
 		if(err){
 			console.log(err);
 			return;
 		}
 
-		console.log(JSON.stringify(data.tracks.items, null, " "));	
+		// console.log(JSON.stringify(data.tracks.items, null, " "));	
 		for (var i = 0; i < data.tracks.items.length; i++){
-			console.log(data.tracks.items[i].artists);
+			var songName = data.tracks.items[i].name;
+			console.log(songName);
+			console.log('SONG NAME', data.tracks.items[i].name);
+			var artistName = data.tracks.items[i].artists[0].name;
+			console.log(artistName);
+			console.log('ARTIST NAME', data.tracks.items[i].artists[0].name);
+			//console.log('ITEMS', data.tracks.items[i]);
+			var albumName = data.tracks.items[i].album.name;
+			console.log(albumName);
+			console.log('ALBUM NAME', data.tracks.items[i].album.name);
+			var previewLink = data.tracks.items[i].preview_url;
+			console.log(previewLink);
+			console.log('PREVIEW LINK', data.tracks.items[i].preview_url);
 		}	
 	});
 };
