@@ -13,94 +13,74 @@ for(var i = 3; i < process.argv.length; i++){
 	commandParameters += " " + process.argv[i];
 };
 
-//console.log(keys);
-// console.log(keys.twitter);
-
 //twitter api call
 function tweet(){	
-	var client = new twitter({
-	  consumer_key: process.env.TWITTER_CONSUMER_KEY,
-	  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-	  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-	  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-	});
+	var client = new twitter(keys.twitter
 
-	console.log("twitter");
-	var params = {screen_name: "muscatelgrapes1"};
+	// {
+	//   consumer_key: process.env.TWITTER_CONSUMER_KEY,
+	//   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+	//   access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+	//   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+	// }
+
+	);
+
+	
+	var params = {screen_name: "muscatelgrapes1", limit: 20};
 
 	client.get("statuses/user_timeline", params, function(error, tweets, response) {
 	  if (!error) {
-	    for(var i =0; i < tweets.length; i++){
-	    	console.log(tweets[i]);
-	    	console.log(tweets[i].created_at);
-	    	console.log(tweets[i].text);
+	    for(var i =0; i < tweets.length; i++){	    	
+	    	console.log("TWEET TIME: ", tweets[i].created_at);
+	    	console.log("TWEET TEXT: ", tweets[i].text);
 	    }
 	  } else {
 	  	console.log("error");
 	  }
 	});
-
 };
 
 
 //spotify api call
-function spotifyMe(){
-	console.log("spotify");
-	var spotify = new Spotify({
-		  id: process.env.SPOTIFY_ID,
-	  	  secret: process.env.SPOTIFY_SECRET 
-	});
-
-	//console.log(spotify);
+function spotifyMe(){	
+	var spotify = new Spotify(keys.spotify
+	// {
+	// 	  id: process.env.SPOTIFY_ID,
+	//   	  secret: process.env.SPOTIFY_SECRET 
+	// }
+	);
+	
 	if(commandParameters){
 	spotify.search({type: "track", query: commandParameters, limit: 1}, function(err, data){
 		if(err){
 			console.log(err);
 			return;
-		}
-		//console.log(data);
-		//console.log(JSON.stringify(data.tracks.items, null, " "));	
+		}	
+	
 		for (var i = 0; i < data.tracks.items.length; i++){
-			//console.log(data);
-			// songName = data.tracks.items[i].name;
-			//console.log(songName);
 			console.log('SONG NAME', data.tracks.items[i].name);
-			//var artistName = data.tracks.items[i].artists[0].name;
-			//console.log(artistName);
 			console.log('ARTIST NAME', data.tracks.items[i].artists[0].name);
-			//console.log('ITEMS', data.tracks.items[i]);
-			//var albumName = data.tracks.items[i].album.name;
-			//console.log(albumName);
 			console.log('ALBUM NAME', data.tracks.items[i].album.name);
-			//var previewLink = data.tracks.items[i].preview_url;
-			//console.log(previewLink);
 			console.log('PREVIEW LINK', data.tracks.items[i].preview_url);
 		}	
 	});
 	} else if (!commandParameters){
-
-		spotify.request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
-  .then(function(data) {
-    //console.log(data); 
-    console.log("SONG NAME", data.name);
-    console.log("ARTIST NAME", data.artists[0].name);
-    console.log("ALBUM NAME", data.album.name);
-    console.log("PREVIEW LINK", data.preview_url);
-   
-  }).catch(function(err) {
-    console.error('Error occurred: ' + err); 
-  });
-
+		spotify.request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE').then(function(data) {    
+		    console.log("SONG NAME", data.name);
+		    console.log("ARTIST NAME", data.artists[0].name);
+		    console.log("ALBUM NAME", data.album.name);
+		    console.log("PREVIEW LINK", data.preview_url);   
+		  }).catch(function(err) {
+		    console.error('Error occurred: ' + err); 
+		  });
 	}
 };
 
 //omdb api call
-function movie(){
-	console.log("movie");
-	//var title = process.argv
+function movie(){	
 	request("http://www.omdbapi.com/?t=" + commandParameters + "&y=&plot=short&apikey=trilogy", function(error,response,body){
-		if(!error && response.statusCode===200 && commandParameters){
-			//console.log(JSON.parse(body));
+		if(!error && response.statusCode===200 && commandParameters){			
 			console.log("Movie: " + JSON.parse(body).Title);
 			console.log("Release Year: " + JSON.parse(body).Year);
 			console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
@@ -122,25 +102,20 @@ function movie(){
 			})
 		}
 	})
-
 };
 
 
-//file reading function
-function random(){
-	console.log("random");
+//file reading function that calls spotifyMe function using contents of the text file as parameter
+function random(){	
 	fs.readFile("random.txt", "utf8", function(error, data){		
 		var newData = data.split(",");		
-		command=newData[0];
-		console.log(command);
-		commandParameters=newData[1];
-		console.log(commandParameters);
+		command=newData[0];	
+		commandParameters=newData[1];		
 		spotifyMe();
 	})
-}
+};
 
-
-
+//conditions to determine which function to call
 if (command==="my-tweets"){
 	tweet();	
 } else if (command==="spotify-this-song"){
