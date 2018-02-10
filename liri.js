@@ -56,29 +56,68 @@ function spotifyMe(){
 	});
 
 	//console.log(spotify);
+	if(commandParameters){
 	spotify.search({type: "track", query: commandParameters, limit: 1}, function(err, data){
 		if(err){
 			console.log(err);
 			return;
 		}
-
-		// console.log(JSON.stringify(data.tracks.items, null, " "));	
+		//console.log(data);
+		//console.log(JSON.stringify(data.tracks.items, null, " "));	
 		for (var i = 0; i < data.tracks.items.length; i++){
-			var songName = data.tracks.items[i].name;
-			console.log(songName);
+			//console.log(data);
+			// songName = data.tracks.items[i].name;
+			//console.log(songName);
 			console.log('SONG NAME', data.tracks.items[i].name);
-			var artistName = data.tracks.items[i].artists[0].name;
-			console.log(artistName);
+			//var artistName = data.tracks.items[i].artists[0].name;
+			//console.log(artistName);
 			console.log('ARTIST NAME', data.tracks.items[i].artists[0].name);
 			//console.log('ITEMS', data.tracks.items[i]);
-			var albumName = data.tracks.items[i].album.name;
-			console.log(albumName);
+			//var albumName = data.tracks.items[i].album.name;
+			//console.log(albumName);
 			console.log('ALBUM NAME', data.tracks.items[i].album.name);
-			var previewLink = data.tracks.items[i].preview_url;
-			console.log(previewLink);
+			//var previewLink = data.tracks.items[i].preview_url;
+			//console.log(previewLink);
 			console.log('PREVIEW LINK', data.tracks.items[i].preview_url);
 		}	
 	});
+	} else if (!commandParameters){
+
+		spotify.request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
+  .then(function(data) {
+    //console.log(data); 
+    console.log("SONG NAME", data.name);
+    console.log("ARTIST NAME", data.artists[0].name);
+    console.log("ALBUM NAME", data.album.name);
+    console.log("PREVIEW LINK", data.preview_url);
+   
+  }).catch(function(err) {
+    console.error('Error occurred: ' + err); 
+  });
+		// spotify.search({type: "track", query: "0hrBpAOgrt8RXigk83LLNE", limit:20}, function(err, data){
+		// 	if(err){
+		// 		console.log(err);
+		// 		return;
+		// 	}
+
+		// 	for (var i = 0; i < data.tracks.items.length; i++){
+		// 	//var songName = data.tracks.items[i].name;
+		// 	//console.log(songName);
+		// 	console.log('SONG NAME', data.tracks.items[i].name);
+		// 	//var artistName = data.tracks.items[i].artists[0].name;
+		// 	//console.log(artistName);
+		// 	console.log('ARTIST NAME', data.tracks.items[i].artists[0].name);
+		// 	console.log('ITEMS', data.tracks.items[i]);
+		// 	//var albumName = data.tracks.items[i].album.name;
+		// 	//console.log(albumName);
+		// 	//console.log('ALBUM NAME', data.tracks.items[i].album.name);
+		// 	//var previewLink = data.tracks.items[i].preview_url;
+		// 	//console.log(previewLink);
+		// 	//console.log('PREVIEW LINK', data.tracks.items[i].preview_url);
+		// }	
+
+		// });
+	}
 };
 
 //omdb api call
