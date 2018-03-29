@@ -1,3 +1,4 @@
+//dependencies
 require("dotenv").config();
 
 var fs = require("fs");
@@ -15,17 +16,7 @@ for(var i = 3; i < process.argv.length; i++){
 
 //twitter api call
 function tweet(){	
-	var client = new twitter(keys.twitter
-
-	// {
-	//   consumer_key: process.env.TWITTER_CONSUMER_KEY,
-	//   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-	//   access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-	//   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-	// }
-
-	);
-
+	var client = new twitter(keys.twitter);
 	
 	var params = {screen_name: "muscatelgrapes1", limit: 20};
 
@@ -41,15 +32,9 @@ function tweet(){
 	});
 };
 
-
 //spotify api call
 function spotifyMe(){	
-	var spotify = new Spotify(keys.spotify
-	// {
-	// 	  id: process.env.SPOTIFY_ID,
-	//   	  secret: process.env.SPOTIFY_SECRET 
-	// }
-	);
+	var spotify = new Spotify(keys.spotify);
 	
 	if(commandParameters){
 	spotify.search({type: "track", query: commandParameters, limit: 1}, function(err, data){
@@ -104,8 +89,7 @@ function movie(){
 	})
 };
 
-
-//file reading function that calls spotifyMe function using contents of the text file as parameter
+//file-reading function that calls spotifyMe function using contents of the text file as parameter
 function random(){	
 	fs.readFile("random.txt", "utf8", function(error, data){		
 		var newData = data.split(",");		
