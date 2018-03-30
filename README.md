@@ -1,6 +1,6 @@
 # liri-node-app
 
-Description:
+## Description:
 
 LIRI is a Language Interpretation and Recognition Interface. It is a command line node app that takes in commands and returns data based on those commands.
 
@@ -16,7 +16,7 @@ Using Node.js and the APIs and npm packages listed at the bottom of this README,
 
 The beauty of this app is that it brings back targeted data so as not to overwhelm you with superfluous details. In short, it is a simple and fast way to find pertinent information.
 
-Instructions:
+## Instructions:
 
 ```node liri.js my-tweets```
 This will display your last 20 tweets as well as when they were created/tweeted.
@@ -31,7 +31,7 @@ If no movie is specified in the command, the information for "Mr. Nobody" will b
 ```node liri.js do-what-it-says```
 Displays information for the Backstreet Boys song "I want it that way".
 
-APIs and NPM packages used:
+**APIs and NPM packages used:**
 
 Twitter API and npm Twitter package
 Spotify API and npm Spotify package
